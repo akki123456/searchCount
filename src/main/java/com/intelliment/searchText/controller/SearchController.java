@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.intelliment.searchText.exception.BadRequestException;
 import com.intelliment.searchText.exception.SearchCounterApplicationException;
 import com.intelliment.searchText.model.SearchList;
 import com.intelliment.searchText.model.Token;
@@ -44,10 +45,11 @@ public class SearchController {
     	try {
     	 topN = Integer.parseInt(n);
     	}catch(Exception e) {
-    		throw new IllegalArgumentException("Number not correct");
+    		
+    		throw new BadRequestException("Number not correct");
     	}
     	if(topN<=0) {
-    		throw new IllegalArgumentException("Number should be positive");
+    		throw new BadRequestException("Number should be positive");
     	}
     	List<Token> sortedList = searchService.getTopNFrequentWords(topN);
     	StringBuilder sb = new StringBuilder();
